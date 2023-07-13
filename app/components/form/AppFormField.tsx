@@ -1,4 +1,4 @@
-import { KeyboardTypeOptions, StyleSheet, Text, View } from "react-native";
+import { KeyboardTypeOptions, StyleSheet } from "react-native";
 import AppTextInput from "./AppTextInput";
 import { useFormikContext } from "formik";
 import AppFormErrorMessage from "./AppFormErrorMessage";

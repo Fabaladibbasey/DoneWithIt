@@ -64,9 +64,6 @@ const AppFormPicker = ({ options, name }: Props) => {
               backgroundColor: colors.yellow,
               color: "black",
               display: "flex",
-              // flexDirection: "row",
-              // justifyContent: "center",
-              // alignItems: "center",
             }}
           >
             {options.map((option) => (

@@ -5,14 +5,20 @@ interface Props {
   initialValues: any;
   validationSchema: any;
   children: React.ReactNode;
+  onSubmit: any;
 }
 
-const AppForm = ({ initialValues, validationSchema, children }: Props) => {
+const AppForm = ({
+  initialValues,
+  validationSchema,
+  onSubmit,
+  children,
+}: Props) => {
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values) => console.log(values)}
+      onSubmit={onSubmit}
     >
       {() => <>{children}</>}
     </Formik>
