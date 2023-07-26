@@ -20,6 +20,7 @@ const LoginScreen = () => {
       <AppForm
         initialValues={{ email: "", password: "" }}
         validationSchema={validationSchema}
+        onSubmit={(values: any) => console.log(values)}
       >
         <View style={appStyles.formContainer}>
           <AppFormField

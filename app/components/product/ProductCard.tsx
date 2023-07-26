@@ -12,14 +12,15 @@ interface Props {
   title: string;
   subTitle: string;
   image: ImageSourcePropType;
+  onPress: () => void;
 }
 
-const ProductCard = ({ title, subTitle, image }: Props) => {
+const ProductCard = ({ title, subTitle, image, onPress }: Props) => {
   return (
     <TouchableHighlight
       activeOpacity={0.6}
       underlayColor={colors.light}
-      onPress={() => console.log("Pressed")}
+      onPress={onPress}
       style={styles.container}
     >
       <View style={styles.wrapper}>

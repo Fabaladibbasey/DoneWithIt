@@ -13,16 +13,23 @@ import AppListItemDeleteAction from "./AppListItemDeleteAction";
 interface Props {
   title: string;
   subTitle?: string;
-  image: ImageSourcePropType | undefined;
+  image?: ImageSourcePropType;
   iconComponent?: React.ReactComponentElement<any>;
+  onPress?: () => void;
 }
 
-const AppListItem = ({ title, subTitle, image, iconComponent }: Props) => {
+const AppListItem = ({
+  title,
+  subTitle,
+  image,
+  iconComponent,
+  onPress,
+}: Props) => {
   return (
     <ListItem.Swipeable rightContent={AppListItemDeleteAction}>
       <TouchableHighlight
         underlayColor={colors.lightGrey}
-        onPress={() => console.log("Pressed")}
+        onPress={onPress}
         style={styles.listItemContainer}
       >
         <View style={styles.listItemContainer}>

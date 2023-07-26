@@ -4,10 +4,15 @@ import AppListItem from "../components/common/AppListItem";
 import AppIcon from "../components/common/AppIcon";
 import colors from "../config/colors";
 import AppItemSeparator from "../components/common/AppItemSeparator";
-const AccountScreen = () => {
+
+interface Props {
+  navigation: any;
+}
+
+const AccountScreen = ({ navigation }: Props) => {
   const menuItems = [
     {
-      title: "My Listings",
+      title: "My Products",
       icon: {
         name: "format-list-bulleted",
         backgroundColor: colors.primary,
@@ -45,6 +50,7 @@ const AccountScreen = () => {
                   color={item.icon.backgroundColor}
                 />
               }
+              onPress={() => navigation.navigate(item.title.replace(" ", ""))}
             />
           )}
           ItemSeparatorComponent={() => <AppItemSeparator />}

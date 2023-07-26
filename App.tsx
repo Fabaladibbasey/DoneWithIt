@@ -1,15 +1,12 @@
 import React from "react";
-import ProductFormScreen from "./app/screens/ProductFormScreen";
-import { AppSafeAreaView } from "./app/components/common";
-import ImageInputList from "./app/components/form/ImageInputList";
+import { NavigationContainer } from "@react-navigation/native";
+import navigationTheme from "./app/navigation/navigationTheme";
+import AppNavigator from "./app/navigation/AppNavigator";
 
 export default function App() {
-  const [imageUris, setImageUris] = React.useState<string[]>([]);
-  const handleAdd = (uri: string) => {
-    setImageUris([...imageUris, uri]);
-  };
-  const handleRemove = (uri: string) => {
-    setImageUris([...imageUris.filter((imageUri) => imageUri !== uri)]);
-  };
-  return <ProductFormScreen />;
+  return (
+    <NavigationContainer theme={navigationTheme}>
+      <AppNavigator />
+    </NavigationContainer>
+  );
 }

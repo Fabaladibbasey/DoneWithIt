@@ -1,16 +1,20 @@
 import { View, Image, StyleSheet, Text } from "react-native";
 import colors from "../config/colors";
 import ListItem from "../components/common/AppListItem";
-const ProductDetails = () => {
+
+interface Props {
+  route: any;
+}
+
+const ProductDetails = ({ route }: Props) => {
+  const { title, subTitle, image } = route.params;
+
   return (
     <View>
       <View style={styles.wrapper}>
-        <Image
-          style={styles.bannerImage}
-          source={require("../../assets/images/mercedes-benz.jpeg")}
-        />
-        <Text style={styles.title}>Merceds Benz for sale</Text>
-        <Text style={styles.subTitle}>$250000</Text>
+        <Image style={styles.bannerImage} source={image} />
+        <Text style={styles.title}> {title} </Text>
+        <Text style={styles.subTitle}>${subTitle}</Text>
       </View>
       <ListItem
         title="Seller"
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: colors.white,
     shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
+    // shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     marginBottom: 10,
   },

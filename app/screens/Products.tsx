@@ -8,7 +8,12 @@ import {
 import AppSafeAreaView from "../components/common/AppSafeAreaView";
 import ProductCard from "../components/product/ProductCard";
 import colors from "../config/colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { NavigationProp } from "@react-navigation/native";
+
+interface Props {
+  navigation: NavigationProp<any>;
+}
 
 const initialProducts = [
   {
@@ -37,9 +42,13 @@ const initialProducts = [
   },
 ];
 
-const Products = () => {
+const Products = ({ navigation }: Props) => {
   const [refereshing, setRefereshing] = useState(false);
   const [products, setProducts] = useState<any>([]); //product type will be define later
+
+  useEffect(() => {
+    setProducts(initialProducts);
+  }, []);
 
   const onRefresh = () => {
     setRefereshing(true);
@@ -71,17 +80,16 @@ const Products = () => {
         }
       >
         <View style={styles.container}>
-          <FlatList
-            data={products.length > 0 ? products : initialProducts}
-            keyExtractor={(product) => product.id.toString()}
-            renderItem={({ item }) => (
+          {products.length > 0 &&
+            products.map((product: any) => (
               <ProductCard
-                title={item.title}
-                subTitle={item.subTitle.toString()}
-                image={item.image}
+                key={product.id}
+                title={product.title}
+                subTitle={product.subTitle.toString()}
+                image={product.image}
+                onPress={() => navigation.navigate("ProductDetails", product)}
               />
-            )}
-          />
+            ))}
         </View>
       </ScrollView>
     </AppSafeAreaView>
