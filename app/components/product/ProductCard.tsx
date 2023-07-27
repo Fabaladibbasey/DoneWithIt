@@ -1,39 +1,35 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  ImageSourcePropType,
-} from "react-native";
+import * as reactNative from "react-native";
 import colors from "../../config/colors";
 
 interface Props {
   title: string;
   subTitle: string;
-  image: ImageSourcePropType;
+  imageUrl: string;
   onPress: () => void;
 }
 
-const ProductCard = ({ title, subTitle, image, onPress }: Props) => {
+const ProductCard = ({ title, subTitle, imageUrl, onPress }: Props) => {
   return (
-    <TouchableHighlight
+    <reactNative.TouchableHighlight
       activeOpacity={0.6}
       underlayColor={colors.light}
       onPress={onPress}
       style={styles.container}
     >
-      <View style={styles.wrapper}>
-        <Image style={styles.bannerImage} source={image} />
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>${subTitle}</Text>
-      </View>
-    </TouchableHighlight>
+      <reactNative.View style={styles.wrapper}>
+        <reactNative.Image
+          style={styles.bannerImage}
+          source={{ uri: imageUrl }}
+        />
+        <reactNative.Text style={styles.title}>{title}</reactNative.Text>
+        <reactNative.Text style={styles.subTitle}>${subTitle}</reactNative.Text>
+      </reactNative.View>
+    </reactNative.TouchableHighlight>
   );
 };
 export default ProductCard;
 
-const styles = StyleSheet.create({
+const styles = reactNative.StyleSheet.create({
   container: {
     display: "flex",
     alignItems: "center",

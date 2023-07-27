@@ -7,21 +7,21 @@ interface Props {
 }
 
 const ProductDetails = ({ route }: Props) => {
-  const { title, subTitle, image } = route.params;
+  const { images, title, price } = route.params;
 
   return (
-    <View>
+    <>
       <View style={styles.wrapper}>
-        <Image style={styles.bannerImage} source={image} />
+        <Image style={styles.bannerImage} source={{ uri: images[0].url }} />
         <Text style={styles.title}> {title} </Text>
-        <Text style={styles.subTitle}>${subTitle}</Text>
+        <Text style={styles.subTitle}>${price}</Text>
       </View>
       <ListItem
         title="Seller"
         subTitle="John Doe"
         image={require("../../assets/images/fabala.jpg")}
       />
-    </View>
+    </>
   );
 };
 
