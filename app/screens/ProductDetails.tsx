@@ -12,7 +12,7 @@ const ProductDetails = ({ route }: Props) => {
   return (
     <>
       <View style={styles.wrapper}>
-        <Image style={styles.bannerImage} source={{ uri: images[0].url }} />
+        <Image style={styles.bannerImage} source={{ uri: images[0]?.url }} />
         <Text style={styles.title}> {title} </Text>
         <Text style={styles.subTitle}>${price}</Text>
       </View>

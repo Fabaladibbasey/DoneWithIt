@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import AppFormPicker from "../components/form/AppFormPicker";
 import FormImagePicker from "../components/form/FormImagePicker";
 import useLocation from "../hooks/useLocation";
+import { FormikValues } from "formik";
+import listings from "../api/listings";
 
 const ProductFormScreen = () => {
   const location = useLocation();
@@ -27,24 +29,41 @@ const ProductFormScreen = () => {
   const validationSchema = Yup.object().shape({
     title: Yup.string().required().label("Title"),
     price: Yup.number().required().min(1).max(10000).label("Price"),
-    category: Yup.string().required().label("Category"),
+    categoryId: Yup.string().required().label("CategoryId"),
     description: Yup.string().required().min(1).max(100).label("Description"),
     images: Yup.array().min(1, "Please select at least one image"),
     // location: Yup.object().required().nullable().label("Location"),
   });
+
+  const submitForm = async (values: FormikValues) => {
+    const result = await listings.addListing(
+      {
+        ...values,
+        location,
+      },
+      (progress: Number) => console.log(progress)
+    );
+
+    if (!result.ok) {
+      return alert("Could not save the listing.");
+    }
+
+    alert("Success");
+  };
+
   return (
     <AppSafeAreaView>
       <AppForm
         initialValues={{
           title: "",
           price: "",
-          category: "",
+          categoryId: "",
           description: "",
           images: [],
           location,
         }}
         validationSchema={validationSchema}
-        onSubmit={(values: any) => console.log({ ...values, location })}
+        onSubmit={(values: any) => submitForm(values)}
       >
         <View style={appStyles.formContainer}>
           <FormImagePicker name="images" />
@@ -54,7 +73,7 @@ const ProductFormScreen = () => {
             placeholder="Price"
             keyboardType="number-pad"
           />
-          <AppFormPicker options={categories} name="category" />
+          <AppFormPicker options={categories} name="categoryId" />
           <AppFormField
             name="description"
             placeholder="enter description"

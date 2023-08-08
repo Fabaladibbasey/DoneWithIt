@@ -4,12 +4,15 @@ import AppListItem from "../components/common/AppListItem";
 import AppIcon from "../components/common/AppIcon";
 import colors from "../config/colors";
 import AppItemSeparator from "../components/common/AppItemSeparator";
+import useAuth from "../hooks/useAuth";
 
 interface Props {
   navigation: any;
 }
 
 const AccountScreen = ({ navigation }: Props) => {
+  const { user, logOut } = useAuth();
+
   const menuItems = [
     {
       title: "My Products",
@@ -31,8 +34,8 @@ const AccountScreen = ({ navigation }: Props) => {
     <AppSafeAreaView propStyles={styles.appScreen}>
       <View style={styles.container}>
         <AppListItem
-          title="Fabala Dibbasey"
-          subTitle="fabaladibbasey27@gmail.com"
+          title={user.name}
+          subTitle={user.email}
           image={require("../../assets/images/fabala.jpg")}
         />
       </View>
@@ -62,6 +65,7 @@ const AccountScreen = ({ navigation }: Props) => {
           iconComponent={
             <AppIcon name="logout" size={40} color={colors.yellow} />
           }
+          onPress={logOut}
         />
       </View>
     </AppSafeAreaView>

@@ -8,10 +8,12 @@ import {
 import AppSafeAreaView from "../components/common/AppSafeAreaView";
 import ProductCard from "../components/product/ProductCard";
 import colors from "../config/colors";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavigationProp } from "@react-navigation/native";
 import listings from "../api/listings";
 import { AppButton } from "../components/common";
+import AppActivityIndicator from "../components/common/AppActivityIndicator";
+import useApi from "../hooks/useApi";
 
 interface Props {
   navigation: NavigationProp<any>;
@@ -19,45 +21,24 @@ interface Props {
 
 const Products = ({ navigation }: Props) => {
   const [refereshing, setRefereshing] = useState(false);
-  const [products, setProducts] = useState<any>([]); //product type will be define later
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    loadListings();
-  }, []);
-
-  const loadListings = async () => {
-    setLoading(true);
-    const response = await listings.getListings();
-    setLoading(false);
-
-    if (!response.ok) return setError(true);
-
-    setProducts(response.data);
-  };
+  const {
+    data: products,
+    error,
+    loading,
+    request: loadListings,
+  } = useApi({ apiFunc: listings.getListings });
 
   const onRefresh = () => {
     setRefereshing(true);
-    const newProducts = [
-      {
-        id: 3,
-        title: "Car 3 in great condition",
-        subTitle: 10000,
-        image: require("../../assets/images/car3.jpeg"),
-      },
-      {
-        id: 4,
-        title: "Car 4 in great condition",
-        subTitle: 100000,
-        image: require("../../assets/images/car4.jpeg"),
-      },
-    ];
-    setProducts(newProducts);
+    loadListings();
     setTimeout(() => {
       setRefereshing(false);
     }, 2000);
   };
+
+  if (loading) {
+    return <AppActivityIndicator visible={true} />;
+  }
 
   return (
     <AppSafeAreaView>
@@ -67,7 +48,7 @@ const Products = ({ navigation }: Props) => {
         }
       >
         <View style={styles.container}>
-          {error && (
+          {error ? (
             <>
               <Text>
                 Couldn't retrieve the listings. Please check your internet
@@ -79,17 +60,17 @@ const Products = ({ navigation }: Props) => {
                 color={colors.primary}
               />
             </>
-          )}
-          {products.length > 0 &&
+          ) : (
             products.map((product: any) => (
               <ProductCard
                 key={product.id}
                 title={product.title}
                 subTitle={product.price}
-                imageUrl={product.images[0].url}
+                imageUrl={product.images[0]?.url}
                 onPress={() => navigation.navigate("ProductDetails", product)}
               />
-            ))}
+            ))
+          )}
         </View>
       </ScrollView>
     </AppSafeAreaView>
